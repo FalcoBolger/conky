@@ -1,0 +1,113 @@
+# .conkyrc - Edited from various examples compiled from the web
+# Used on Ubuntu
+
+# --- Window Layout & Options --- #
+own_window yes
+own_window_colour brown
+own_window_transparent yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+use_spacer right
+use_xft yes
+alignment top_right
+gap_x 0
+gap_y 24
+
+# --- --- #
+if_up_strictness address
+short_units yes
+
+# --- Colours, Sizes, Fonts & Margins --- #
+update_interval 2.0
+maximum_width 250
+stippled_borders 3
+border_margin 9
+border_width 10
+default_color white
+
+# --- Text --- #
+draw_outline no
+draw_borders no
+draw_graph_borders no
+font Monospace:size=8
+uppercase no
+draw_shades yes
+
+#${font openlogos:size=20}U${font Arial:bold:size=10}${color Tan1} $alignc GNU${color Ivory}LINUX${font openlogos:size=20} $alignr t${font}
+#${font openlogos:size=20} $alignc u${font}
+
+TEXT
+${font Verdana:bold:size=8}${color #539EEB}DATE ${voffset -2}${hr 2}$color${font}
+
+${font Arial:bold:size=16}${color white}${alignc}${time %H:%M:%S}${font}
+${font Arial:bold:size=8}${color white}${alignc}${time %A},${time %e} ${time %B} ${time %G}${font}
+
+${font Verdana:bold:size=8}${color #539EEB}SYSTEM INFORMATION ${voffset -2}${hr 2}$color${font}
+
+${font Verdana:size=8}${color white}Machine$color ${color #539EEB}$nodename $alignr ${color white}Uptime$color${color #539EEB} $alignr $uptime${font}
+${font Verdana:size=8}${color white}Kernel$color  ${color #539EEB} $alignr $kernel${font}
+${font Verdana:size=8}${color white}Ubuntu$color ${color #539EEB}${execi 99999 cat /etc/issue | grep Ubuntu | cut -d' ' -f2} $alignr ${color white}Gnome ${color #539EEB} $alignr ${execi 99999 gnome-about --gnome-version | grep Versión | cut -d' ' -f2}${font}
+${font Verdana:size=8}${color white}Temperature$color ${color #539EEB} $alignr ${acpitemp}°C${font}
+
+${font Verdana:bold:size=8}${color #539EEB}CPU ${voffset -2}${hr 2}$color${font}
+
+${font Verdana:size=8}${color white}${execi 99999 cat /proc/cpuinfo | grep "model name" -m1 | cut -d":" -f2 | cut -d" " -f2- | sed 's#Processor ##'}$font$color
+
+${cpugraph cpu 12,40 000000 ff6600 }
+${voffset -13}${font Verdana:size=8}${color white}CPU 1${font}
+${voffset -13}${goto 50}${color #539EEB}${cpubar cpu 12}
+${font Verdana:size=8}${color white}${voffset -14}${goto 52}${cpu cpu}%${font}
+
+
+${font Verdana:bold:size=8}${color #539EEB}TOP 5 PROCESSES ${voffset -2}${hr 2}$color${font}
+${font Verdana:size=8}${color white} $alignr [$running_processes/$processes]${font}
+${font Verdana:size=8}${color white}NAME                  PID        CPU        MEM${font}
+${voffset -8}${hr 1}
+${color #FF0000}${top name 1}${top pid 1}   ${top cpu 1}   ${top mem 1}
+${color #FF6600}${top name 2}${top pid 2}   ${top cpu 2}   ${top mem 2}
+${color #FF9900}${top name 3}${top pid 3}   ${top cpu 3}   ${top mem 3}
+${color #FFCC00}${top name 4}${top pid 4}   ${top cpu 4}   ${top mem 4}
+${color #FFFF00}${top name 5}${top pid 5}   ${top cpu 5}   ${top mem 5}
+
+${font Verdana:bold:size=8}${color #539EEB}MEMORY & SWAP ${voffset -2}${hr 2}$color${font}
+
+${font Verdana:size=8}${color white}RAM${font}
+${voffset -13}${goto 50}${color #539EEB}${membar 12}
+${font Verdana:size=8}${color white}${voffset -14}${goto 52}$memperc%${font}
+${font Verdana:size=8}${color white}$mem/$memmax${font}
+
+${font Verdana:size=8}${color white}Swap${font}
+${voffset -13}${goto 50}${color #539EEB}${swapbar 12}$color
+${font Verdana:size=8}${color white}${voffset -14}${goto 52}$swapperc%${font}
+${font Verdana:size=8}${color white}$swap/$swapmax${font}
+
+${font Verdana:bold:size=8}${color #539EEB}DRIVES ${voffset -2}${hr 2}$color${font}
+
+${font Verdana:size=8}${color white}Ubuntu ${goto 230}${fs_free_perc /}%${font}
+${voffset -13}${goto 75}${color #539EEB}${fs_bar 12 /}$color
+${voffset -14}${goto 76}${font Verdana:size=8}${color white}${fs_used /}/${fs_size /}${font}
+
+${font Verdana:size=8}${color white}Home${goto 230}${fs_free_perc /home}%${font}
+${voffset -13}${goto 75}${color #539EEB}${fs_bar 12 /home}
+${voffset -14}${goto 76}${font Verdana:size=8}${color white}${fs_used /home}/${fs_size /home}${font}${if_mounted /media/TREKSTOR}
+
+${font Verdana:size=8}${color white}TREKSTOR${goto 230}${fs_free_perc /media/TREKSTOR}%${font}
+${voffset -13}${goto 75}${color #539EEB}${fs_bar 12 /media/TREKSTOR}
+${voffset -14}${goto 76}${font Verdana:size=8}${color white}${fs_used /media/TREKSTOR}/${fs_size /media/TREKSTOR}${font}${endif}${if_mounted /media/TREKSTOR1}
+
+${font Verdana:size=8}${color white}TREKSTOR1${goto 230}${fs_free_perc /media/TREKSTOR1}%${font}
+${voffset -13}${goto 75}${color #539EEB}${fs_bar 12 /media/TREKSTOR1}
+${voffset -14}${goto 76}${font Verdana:size=8}${color white}${fs_used /media/TREKSTOR1}/${fs_size /media/TREKSTOR1}${font}${endif}${if_up eth1}
+
+${font Verdana:bold:size=8}${color #539EEB}LAN (${addr eth1}) ${voffset -2}${hr 2}$color${font}
+
+${color #00ff00}${downspeedgraph eth1 12,120 000000 00ff00} ${alignr}${color #ff0000}${upspeedgraph eth1 12,120 000000 ff0000}
+${voffset -13}${font Verdana:size=8}${color white}Down:$color  ${downspeed eth1}KB/s ${alignr}${color white}Up:$color ${upspeed eth1} KB/s${font}${endif}${if_up wlan0}
+
+${font Verdana:bold:size=8}${color #539EEB}WIRELESS (${addr wlan0}) ${voffset -2}${hr 2}$color${font}
+
+${font Verdana:size=8}${wireless_link_qual_perc wlan0}% @ ${wireless_essid wlan0} $alignr ${wireless_mode wlan0}${font}
+${color #00ff00}${downspeedgraph wlan0 12,120 000000 00ff00} ${alignr}${color #ff0000}${upspeedgraph wlan0 12,120 000000 ff0000}
+${voffset -13}${font Verdana:size=8}${color white}Down:$color  ${downspeed wlan0}KB/s ${alignr}${color white}Up:$color ${upspeed wlan0} KB/s${font}${endif}
